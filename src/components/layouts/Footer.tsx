@@ -1,11 +1,15 @@
 import { appConfig } from "@/config/app";
 import { ModeToggle } from "../mode-toggle";
+import Powered from "../../assets/api_logo_pwrdBy_strava_stack_orange.svg"
+import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export function Footer() {
     return (
-        <footer className="flex flex-col items-center justify-between gap-4 min-h-[3rem] md:h-20 py-2 md:flex-row">
-            <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">Built by <a href={appConfig.author.url} target="_blank" rel="noreferrer" className="font-medium underline underline-offset-4">{appConfig.author.name}</a>. The source code is available on <a href={appConfig.github.url} target="_blank" rel="noreferrer" className="font-medium underline underline-offset-4">GitHub</a>.</p>
-            <div className="hidden md:block">
+        <footer className="py-12">
+            <Card className="bg-white p-3 w-full">
+                <img src={Powered} alt="Powered by Strava" className="h-10" />
+            </Card>
+            <div className="hidden">
                 <ModeToggle />
             </div>
         </footer>

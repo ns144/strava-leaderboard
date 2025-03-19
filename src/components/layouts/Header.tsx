@@ -18,6 +18,7 @@ import { mainMenu } from "@/config/menu";
 import { ChevronDownIcon, ViewVerticalIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Logo } from "../logo";
+import { ModeToggle } from "../mode-toggle";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export function Header() {
@@ -160,6 +161,9 @@ export function Header() {
                     <span className="font-bold inline-block">{appConfig.name}</span>
                 </a>
                 {/* right */}
+                <div className="flex flex-1 items-center space-x-2 justify-end">
+                    <ModeToggle/>
+                </div>
                 {/* <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
                     <div className="w-full flex-1 md:w-auto md:flex-none">
                         

@@ -11,9 +11,9 @@ interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-    name: "Strava Leaderboard",
+    name: "Leaderboard",
     github: {
-        title: "React Shadcn Starter",
+        title: "Leaderboard",
         url: "https://github.com/hayyi2/react-shadcn-starter",
     },
     author: {

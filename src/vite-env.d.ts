@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
 
-declare const global: {
+declare const general: {
     basename: string
 }

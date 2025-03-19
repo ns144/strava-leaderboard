@@ -2,7 +2,7 @@ type IconProps = React.HTMLAttributes<SVGElement>
 
 export const Icons = {
     logo: (props: IconProps) => (
-        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M158.4 0L7 292h89.2l62.2-116.1L220.1 292h88.5zm150.2 292l-43.9 88.2-44.6-88.2h-67.6l112.2 220 111.5-220z"/></svg>
+        <svg className="h-10 w-10" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 320 320"><path fill="currentColor" d="M233.5 127.7c-25.7 16-72.3 44.7-97.3 60.1l-7.4 4.5.7 15.6c.4 8.6.8 15.7.9 15.8s2.9-2.1 6.2-5 8.7-7.5 11.9-10.2c3.2-2.8 8.2-7 11-9.5s8.9-7.7 13.5-11.5c8.6-7.3 16.2-13.7 30.9-26.5 4.8-4.1 18.8-16.1 31.1-26.5 24.2-20.6 29.8-25.5 29-25.4-.3 0-14 8.4-30.5 18.6zm-112.1-5.6c-7.4 13.1-61.6 109.4-62.1 110.2-.3.4 3.5-1.7 8.4-4.7 4.8-3 20.1-12.4 33.8-20.9l25-15.4.2-18.4c.2-10.1 0-27.3-.5-38.3l-.7-19.8z"/></svg>    
     ),
     gitHub: (props: IconProps) => (
         <svg viewBox="0 0 438.549 438.549" {...props}>

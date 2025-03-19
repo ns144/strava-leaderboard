@@ -37,15 +37,15 @@ export default function Dashboard() {
                     const prTimes = user.pr?.Run || {};
                     const activities = user.activities || [];
                     
-                    const runningActivities = activities.filter(act => act.type === "Run");
+                    const runningActivities = activities.filter((act: { type: string; }) => act.type === "Run");
                     console.log(runningActivities);
                     const lastWeekDistance = runningActivities
-                        .filter(act => isWithinInterval(new Date(act.start_date), { start: lastWeek, end: now }))
-                        .reduce((sum, act) => sum + act.distance, 0);
+                        .filter((act: { start_date: string | number | Date; }) => isWithinInterval(new Date(act.start_date), { start: lastWeek, end: now }))
+                        .reduce((sum: any, act: { distance: any; }) => sum + act.distance, 0);
 
                     const lastMonthDistance = runningActivities
-                        .filter(act => isWithinInterval(new Date(act.start_date), { start: lastMonth, end: now }))
-                        .reduce((sum, act) => sum + act.distance, 0);
+                        .filter((act: { start_date: string | number | Date; }) => isWithinInterval(new Date(act.start_date), { start: lastMonth, end: now }))
+                        .reduce((sum: any, act: { distance: any; }) => sum + act.distance, 0);
 
                     return {
                         username: user.profile?.firstName + " " + user.profile?.lastName,
@@ -99,7 +99,7 @@ export default function Dashboard() {
                                 profilePicture: user.profilePicture,
                                 value: user.last_week_distance/1000,
                             }))}
-                            title="Last Week Running Distances"
+                            title="Last Week"
                             dataKey="value"
                             unit="kilometers"
                             color="hsl(var(--chart-1))"
@@ -110,7 +110,7 @@ export default function Dashboard() {
                                 profilePicture: user.profilePicture,
                                 value: user.last_month_distance/1000,
                             }))}
-                            title="Last Month Running Distances"
+                            title="Last Month"
                             dataKey="value"
                             unit="kilometers"
                             color="hsl(var(--chart-1))"
@@ -121,7 +121,7 @@ export default function Dashboard() {
                                 profilePicture: user.profilePicture,
                                 value: user.ytd_run_distance/1000,
                             }))}
-                            title="This Year Running Distances"
+                            title="This Year"
                             dataKey="value"
                             unit="kilometers"
                             color="hsl(var(--chart-1))"
@@ -132,7 +132,7 @@ export default function Dashboard() {
                                 profilePicture: user.profilePicture,
                                 value: user.all_run_distance/1000,
                             }))}
-                            title="Complete Running Distances"
+                            title="Total"
                             dataKey="value"
                             unit="kilometers"
                             color="hsl(var(--chart-1))"
