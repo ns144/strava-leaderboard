@@ -7,6 +7,8 @@ import { format, subDays, isWithinInterval } from "date-fns";
 import StravaButton from "@/assets/btn_strava_connect_with_orange_x2.svg";
 import StravaClaim from "@/api_logo_pwrdBy_strava_stack_orange.svg";
 import UserBarChart from "@/components/UserBarChart";
+import UserRadialChart from "@/components/UserRadialChart";
+import UserSelector from "@/components/UserSelector";
 
 const STRAVA_CLIENT_ID = "152025";
 const REDIRECT_URI = `${window.location.origin}/callback`;
@@ -16,6 +18,7 @@ const SCOPE = "activity:read";
 export default function Dashboard() {
     const [accessToken, setAccessToken] = useState<string | null>(localStorage.getItem("strava_access_token"));
     const [userStats, setUserStats] = useState<any[]>([]);
+    const [selectedUser, setSelectedUser] = useState(userStats[0]?.username || "");
 
     const handleStravaLogin = () => {
         const authUrl = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${SCOPE}&approval_prompt=force`;
@@ -47,6 +50,25 @@ export default function Dashboard() {
                         .filter((act: { start_date: string | number | Date; }) => isWithinInterval(new Date(act.start_date), { start: lastMonth, end: now }))
                         .reduce((sum: any, act: { distance: any; }) => sum + act.distance, 0);
 
+                    const lastMonthElapsedTime = runningActivities
+                        .filter((act: { start_date: string | number | Date; }) => 
+                            isWithinInterval(new Date(act.start_date), { start: lastMonth, end: now })
+                        )
+                        .reduce((sum: number, act: { elapsed_time: number }) => sum + act.elapsed_time, 0);
+                    
+                    const lastMonthPace = lastMonthElapsedTime > 0 ? (lastMonthElapsedTime/60) / (lastMonthDistance/1000) : 0;
+                    
+                    const lastMonthHeartRates = runningActivities
+                        .filter((act: { start_date: string | number | Date; }) => 
+                            isWithinInterval(new Date(act.start_date), { start: lastMonth, end: now })
+                        )
+                        .map((act: { average_heartrate: number }) => act.average_heartrate);
+                    
+                    const lastMonthHeartRate = lastMonthHeartRates.length > 0 
+                        ? lastMonthHeartRates.reduce((sum:number, hr:number) => sum + hr, 0) / lastMonthHeartRates.length 
+                        : 0;
+
+
                     return {
                         username: user.profile?.firstName + " " + user.profile?.lastName,
                         profilePicture: user.profile?.profilePicture,
@@ -56,6 +78,8 @@ export default function Dashboard() {
                         recent_run_distance: user.stats?.recent_run_totals?.distance,
                         last_week_distance: lastWeekDistance,
                         last_month_distance: lastMonthDistance,
+                        latest_pace: lastMonthPace,
+                        latest_hr: lastMonthHeartRate,
                     };
                 });
 
@@ -141,6 +165,49 @@ export default function Dashboard() {
                     ) : (
                         <p>Loading activities...</p>
                     )}                    
+                </div>
+            </Card>
+            <Card className="mt-12">
+                <CardHeader>
+                    <CardTitle className="text-2xl">Latest Trainings</CardTitle>
+                    <CardDescription>Statistics based on last months runs</CardDescription>
+                </CardHeader>
+                <div className="p-4 space-y-6">
+                    {userStats.length > 0 ? (
+                        <>
+                            <UserSelector data={userStats} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+                            <div className="flex sm:flex-row gap-6 items-center flex-col">
+                            <UserRadialChart
+                                        data={userStats.map(user => ({
+                                            username: user.username,
+                                            profilePicture: user.profilePicture,
+                                            value: user.latest_hr,
+                                        }))}
+                                        title="Average Heartrate"
+                                        dataKey="value"
+                                        unit="bpm"
+                                        color="hsl(var(--chart-1))"
+                                        selectedUser={selectedUser}
+                                        maxValue={240}
+                                    />
+                            <UserRadialChart
+                                        data={userStats.map(user => ({
+                                            username: user.username,
+                                            profilePicture: user.profilePicture,
+                                            value: user.latest_pace,
+                                        }))}
+                                        title="Average Pace"
+                                        dataKey="value"
+                                        unit="min/km"
+                                        color="hsl(var(--chart-1))"
+                                        selectedUser={selectedUser}
+                                        maxValue={12}
+                                    />
+                            </div>
+                        </>
+                    ) : (
+                        <p>Loading activities...</p>
+                    )}  
                 </div>
             </Card>
             <Card className="mt-12">
