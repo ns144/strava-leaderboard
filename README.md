@@ -3,6 +3,9 @@ As it is not possible to view a ranking amongst friends within the popular sport
 The Leaderboard is build with React / Typescript / Shadcn. 
 
 The leaderboard is live at [Strava Leaderboard](https://strava-leaderboard.nikolasschaber.de/) 
+
+The data is visualized using Recharts Charts styled with Shadcn:
+
 ![grafik](https://github.com/user-attachments/assets/569bdd0d-920f-4bcd-8577-425af26a4ef8)
 
 Users can connect their accounts to the leaderboard via the OAuth2 authentication, as explained by Strava in the following image:
