@@ -16,4 +16,4 @@ Users can connect their accounts to the leaderboard via the OAuth2 authenticatio
 
 Thanks to Stravas Webhooks the application does not permanently request data from Strava but instead is notified whenever a User completes a new activity.
 
-If you withdraw the access of your data to strava-leaderboard in your Strava account settings, the data will automatically deleted from my app :)
+If you withdraw the access of your data to strava-leaderboard in your Strava account settings, the data will be automatically deleted from my app :)
